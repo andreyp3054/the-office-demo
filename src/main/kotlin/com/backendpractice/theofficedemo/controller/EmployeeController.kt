@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController
 class EmployeeController {
 
     @PostMapping("hire")
-    fun hireEmployee(@RequestBody employee: Employee): String {
-        return "You are hired! $employee"
+    fun hireEmployee(@RequestBody employee: Employee) {
+//        return "You are hired! $employee"
+        return Office.hireEmployee(employee)
     }
 
     //how to hire? follow this format in Body Request thru hireEmployee
@@ -27,12 +28,13 @@ class EmployeeController {
         }
      */
     @GetMapping("all")
-    fun allEmployees(): List<Employee> {
-        return listOf(
-                Employee(2, "Jeremiah Dumpor", "jeremiah@gmail.com", "Engineering Head"),
-                Employee(3, "Terence Acebu", email = "terenceacebu@gmail.com", "Senior Web Developer"),
-                Employee(4, "Trisha", "trisha@gmail.com", "CEO")
-        )
+    fun allEmployees(): MutableSet<Employee> {
+        return Office.getAllEmployees()
+//        return listOf(
+//                Employee(2, "Jeremiah Dumpor", "jeremiah@gmail.com", "Engineering Head"),
+//                Employee(3, "Terence Acebu", email = "terenceacebu@gmail.com", "Senior Web Developer"),
+//                Employee(4, "Trisha", "trisha@gmail.com", "CEO")
+//        )
     }
 
     @GetMapping("test")
