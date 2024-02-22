@@ -2,20 +2,18 @@ package com.backendpractice.theofficedemo.controller
 
 import com.backendpractice.theofficedemo.models.Employee
 import com.backendpractice.theofficedemo.models.Office
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("employee")
 class EmployeeController {
 
     @PostMapping("hire")
-    fun hireEmployee(@RequestBody employee: Employee) {
+    fun hireEmployee(@RequestBody employee: Employee): String {
 //        return "You are hired! $employee"
-        return Office.hireEmployee(employee)
+        return if (Office.hireEmployee(employee))
+            "The following person has been hired: $employee"
+        else "This person could not be hired: $employee"
     }
 
     //how to hire? follow this format in Body Request thru hireEmployee
@@ -42,5 +40,10 @@ class EmployeeController {
         return Employee(1, "Mark Andrey Acebu", "mark@gmail.com", "Manager").toString()
     }
 
-
+    @GetMapping("fire/{id}")
+    fun fireEmployee(@PathVariable id: Int): String {
+        return if (Office.fireEmployee(id))
+            "This person with id $id has been fired"
+        else "The person with id $id has NOT been fired"
+    }
 }
